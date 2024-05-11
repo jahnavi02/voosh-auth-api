@@ -12,9 +12,11 @@ Authentication API for Voosh-assignment
 ### Setting up Environment Variables
 
 1. Create a `.env` file in the root directory of the project.
+```
 PORT=3000
 MONGODB_URI=your_mongo_uri_here
 JWT_SECRET=your_secret_key_here
+```
 2. Add the following environment variables to the `.env` file:
 
 3. Replace `your_mongo_uri_here` with your actual MongoDB URI. This URI should include the necessary credentials for connecting to your MongoDB database.
