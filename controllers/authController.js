@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const passport = require('passport');
 const { validationResult } = require("express-validator");
 
 // Register a new user
@@ -91,6 +92,49 @@ exports.login = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+
+
+// Controller for handling OAuth authentication callback
+exports.authCallback = (req, res, next) => {
+  passport.authenticate('google', { failureRedirect: '/login' })(req, res, next);
+};
+
+// Controller for initiating OAuth authentication flow
+exports.authGoogle = (req, res, next) => {
+  passport.authenticate('google', {
+    scope: ['email', 'profile']
+  })(req, res, next);
+};
+
+// Controller for handling successful OAuth authentication
+exports.authGoogleCallback = (req, res) => {
+  // If authentication is successful, user data is available in req.user
+  if (!req.user) {
+    return res.redirect('/login'); // Redirect to login page if authentication fails
+  }
+
+  // User is authenticated, handle further actions like creating or updating user data
+  const user = req.user;
+
+  // You can perform actions like creating a new user account or updating existing user data
+  // Example:
+  User.findOneAndUpdate(
+    { email: user.email },
+    { $setOnInsert: { email: user.email, name: user.name } },
+    { upsert: true, new: true }
+  ).exec((err, user) => {
+    if (err) {
+      console.error(err);
+      return res.redirect('/login'); // Redirect to login page if an error occurs
+    }
+
+    // Redirect to dashboard or homepage after successful authentication
+    res.redirect('/dashboard');
+  });
+};
+
+
 
 
 // Sign out
