@@ -16,10 +16,14 @@ Authentication API for Voosh-assignment
 PORT=3000
 MONGODB_URI=your_mongo_uri_here
 JWT_SECRET=your_secret_key_here
+GOOGLE_CLIENT_ID = your_google_client_id_here
+GOOGLE_CLIENT_SECRET = your_google_client_secret_here
 ```
 2. Add the following environment variables to the `.env` file:
 
 3. Replace `your_mongo_uri_here` with your actual MongoDB URI. This URI should include the necessary credentials for connecting to your MongoDB database.
+
+4. Replace `your_google_client_id_here` and `your_google_client_secret_here` with actual Google client ID and client secret that is obtained from the project on Google Cloud Platform Console
 
 4. Save the `.env` file.
 
