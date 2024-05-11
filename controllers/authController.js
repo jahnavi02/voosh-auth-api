@@ -95,6 +95,16 @@ exports.login = async (req, res) => {
 
 // Sign out
 exports.signOut = (req, res) => {
-    // Logic to invalidate JWT token, if stored
+  try {
+    // Clear any user-related data from the client-side (e.g., cookies, local storage)
+    
+    // For example, if using JWT tokens, you can clear the token from the client-side
+    res.clearCookie('token');
+    
+    // Send a response indicating successful sign-out
     res.json({ msg: "Signed out successfully" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
 };
